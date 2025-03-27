@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бабки Долой - Главная</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Бабки Долой</h1>
+            <div class="balance">Баланс: {{ balance }} ₽</div>
+        </header>
+
+        {% if result_message %}
+        <div class="alert">
+            {{ result_message }}
+        </div>
+        {% endif %}
+
+        <h2>Доступные события</h2>
+        <div class="events-grid">
+            {% for event in events %}
+            <div class="event-card">
+                <h3>{{ event.name }}</h3>
+                <div class="odds">
+                    {% for odd in event.odds %}
+                    <span>Исход {{ loop.index }}: {{ odd }}</span>
+                    {% endfor %}
+                </div>
+                <a href="{{ url_for('place_bet', event_id=event.id) }}" class="btn">Сделать ставку</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

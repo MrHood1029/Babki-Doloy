@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бабки Долой - Подтверждение ставки</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Бабки Долой</h1>
+            <div class="balance">Баланс: {{ balance }} ₽</div>
+        </header>
+
+        <h2>Подтверждение ставки</h2>
+
+        <div class="bet-summary">
+            <p><strong>Событие:</strong> {{ bet.event_name }}</p>
+            <p><strong>Сумма ставки:</strong> {{ bet.bet_amount }} ₽</p>
+            <p><strong>Выбранный исход:</strong> Исход {{ bet.selected_outcome + 1 }} (коэф. {{ bet.odds }})</p>
+            <p><strong>Потенциальный выигрыш:</strong> {{ bet.potential_win }} ₽</p>
+        </div>
+
+        <div class="chart-container">
+            <img src="{{ plot_url }}" alt="График потенциальных выигрышей">
+        </div>
+
+        <form action="{{ url_for('process_bet') }}" method="POST">
+            <button type="submit" class="btn confirm">Подтвердить ставку</button>
+            <a href="{{ url_for('index') }}" class="btn cancel">Отмена</a>
+        </form>
+    </div>
+</body>
+</html>

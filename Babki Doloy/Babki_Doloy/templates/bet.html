@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бабки Долой - Ставка</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Бабки Долой</h1>
+            <div class="balance">Баланс: {{ balance }} ₽</div>
+        </header>
+
+        <h2>Ставка на: {{ event.name }}</h2>
+
+        {% if error %}
+        <div class="alert error">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="amount">Сумма ставки ({{ MIN_BET }} - {{ MAX_BET }} ₽):</label>
+                <input type="number" id="amount" name="amount" min="{{ MIN_BET }}" max="{{ MAX_BET }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Выберите исход:</label>
+                {% for odd in event.odds %}
+                <div class="radio-option">
+                    <input type="radio" id="outcome{{ loop.index0 }}" name="outcome" value="{{ loop.index0 }}" required>
+                    <label for="outcome{{ loop.index0 }}">Исход {{ loop.index }} (коэф. {{ odd }})</label>
+                </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn">Сделать ставку</button>
+            <a href="{{ url_for('index') }}" class="btn cancel">Отмена</a>
+        </form>
+    </div>
+</body>
+</html>
